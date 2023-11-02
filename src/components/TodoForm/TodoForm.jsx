@@ -1,7 +1,6 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../../redux/todoSlice";
+import { addTask } from "../../redux/operations";
 
 const TodoForm = () => {
   const [value, setValue] = useState("");
@@ -9,7 +8,7 @@ const TodoForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(addTask({ id: nanoid(), text: value, complited: false }));
+    dispatch(addTask(value));
     setValue("");
   };
 

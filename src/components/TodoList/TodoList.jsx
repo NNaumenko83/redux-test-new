@@ -1,43 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTask,
-  todosSelector,
-  toggleCompleted,
-} from "../../redux/todoSlice";
+import { selectTodos } from "../../redux/todoSlice";
+import { deleteTask } from "../../redux/operations";
 
 const TodoList = () => {
+  const { items, isLoading } = useSelector(selectTodos);
   const dispatch = useDispatch();
-  const todos = useSelector(todosSelector);
-  console.log("todos:", todos);
 
-  const completedToggle = (id) => {
-    dispatch(toggleCompleted(id));
-  };
-  const deleteButtonHandler = (id) => {
+  const handleButtonClick = (id) => {
     dispatch(deleteTask(id));
   };
 
   return (
     <div>
-      TodoList
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => {
-                completedToggle(todo.id);
-              }}
-            />
-            <p>{todo.text}</p>
-
-            <button type="button" onClick={() => deleteButtonHandler(todo.id)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <h1>LOADING...</h1>
+      ) : (
+        <ul>
+          {items.map((todo) => (
+            <li key={todo.id}>
+              <p>{todo.text}</p>
+              <button type="button" onClick={() => handleButtonClick(todo.id)}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
