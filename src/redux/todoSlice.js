@@ -31,4 +31,6 @@ export const { addTask, deleteTask, toggleCompleted } = counterSlice.actions;
 
 export const todosReducer = counterSlice.reducer;
 
+// Селектор
+
 export const todosSelector = (state) => state.todos;
